@@ -8,8 +8,7 @@ $(function() {
 
   var posX;
   var posY;
-
-  var clicks = 0;
+  var clicks;
 
   var updateClicks = function(reset) {
     clicks++;
