@@ -1,0 +1,17 @@
+{
+  "name": "hrsf50-mvp",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "Zack Winchell <zackwinchell@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/Gkjsdll/hrsf50-mvp",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

@@ -1,0 +1,10 @@
+h1, h3, h5 {
+  text-align: center;
+}
+
+#gameField {
+  border: 1px solid black;
+  width: 640px;
+  height: 480px;
+  margin: 0px auto;
+}
