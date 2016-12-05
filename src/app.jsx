@@ -19,7 +19,8 @@ class App extends React.Component {
     this.setState({
       posX: newX,
       posY: newY,
-      clicks: 0
+      clicks: 0,
+      gameStart: Date.now()
     });
   }
 
@@ -35,7 +36,10 @@ class App extends React.Component {
     let proximity = this.distance(e.offsetX, e.offsetY);
     proximity = Math.round(proximity);
     if (proximity < 35) {
-      stateUpdate.lastGuess = `You win with ${this.state.clicks + 1} clicks!`;
+      let gameTime = Date.now() - this.state.gameStart;
+      gameTime = Math.floor(gameTime / 100) / 10;
+      stateUpdate.lastGuess = `You win with ${this.state.clicks + 1} clicks! `;
+      stateUpdate.lastGuess += `You took ${gameTime} seconds to win.`;
       this.newGame();
     } else {
       stateUpdate.lastGuess = `${proximity} pixels off!`;
