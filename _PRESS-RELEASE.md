@@ -27,10 +27,8 @@ will be hot & cold with user accounts & a leaderboard, the best Hot and Cold.
 
   > "Competition is a rude yet effective motivation." - Toba Beta
 
-To pick a random location in a fixed size box is easy, as is to calculate the
-distance between that point and where the user clicks. Scoring can be a maximum
-score minus the time times a coefficient, minus the number of clicks times
-another coefficient.
+The technical complexity of this project is minimal, new features easy to add,
+and can be great to play alone or alongside friends.
 
   > "I always loved playing this game as a kid, and now I can play again!"
 
