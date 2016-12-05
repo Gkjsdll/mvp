@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/Gkjsdll/hrsf50-mvp/issues"
   },
-  "homepage": "https://github.com/Gkjsdll/hrsf50-mvp#readme"
+  "homepage": "https://github.com/Gkjsdll/hrsf50-mvp#readme",
+  "dependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-preset-react": "^6.16.0"
+  }
 }
