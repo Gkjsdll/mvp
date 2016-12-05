@@ -15,30 +15,25 @@ Oh, and I also like to write press-releases in what I call "Oprah-speak" for mai
 
 Once the project moves into development, the press release can be used as a touchstone; a guiding light. The product team can ask themselves, "Are we building what is in the press release?" If they find they're spending time building things that aren't in the press release (overbuilding), they need to ask themselves why. This keeps product development focused on achieving the customer benefits and not building extraneous stuff that takes longer to build, takes resources to maintain, and doesn't provide real customer benefit (at least not enough to warrant inclusion in the press release).
  -->
- 
-## Heading ##
-  > Name the product in a way the reader (i.e. your target customers) will understand.
 
-## Sub-Heading ##
-  > Describe who the market for the product is and what benefit they get. One sentence only underneath the title.
+# Hot or Cold
+  > The Hot or Cold game with high scores & user accounts.
 
-## Summary ##
-  > Give a summary of the product and the benefit. Assume the reader will not read anything else so make this paragraph good.
+The Hot and Cold game is fun to play, but can be played with only two people.
+One of the best ways to play these sorts of games with more than two people
+is to have pairs play separately & compare performances (scores). With the
+power of computers, you can any number of people compete together! This product
+will be hot & cold with user accounts & a leaderboard, the best Hot and Cold.
 
-## Problem ##
-  > Describe the problem your product solves.
+  > "Competition is a rude yet effective motivation." - Toba Beta
 
-## Solution ##
-  > Describe how your product elegantly solves the problem.
+To pick a random location in a fixed size box is easy, as is to calculate the
+distance between that point and where the user clicks. Scoring can be a maximum
+score minus the time times a coefficient, minus the number of clicks times
+another coefficient.
 
-## Quote from You ##
-  > A quote from a spokesperson in your company.
+  > "I always loved playing this game as a kid, and now I can play again!"
 
-## How to Get Started ##
-  > Describe how easy it is to get started.
-
-## Customer Quote ##
-  > Provide a quote from a hypothetical customer that describes how they experienced the benefit.
-
-## Closing and Call to Action ##
-  > Wrap it up and give pointers where the reader should go next.
+The nostalgia of the game being played as a child, coupled with the thrill of
+competition, makes this product a sure success with users. For more info,
+see the Wikipedia page on Hunt the Thimble (see Hot or Cold)
