@@ -76,7 +76,6 @@ class App extends React.Component {
       } else {
         alert('Perfect scores don\'t go on the leaderboard!');
       }
-      this.newGame();
     } else {
       stateUpdate.lastGuess = `${proximity} pixels off!`;
       stateUpdate.clicks = this.state.clicks + 1;
