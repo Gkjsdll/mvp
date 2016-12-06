@@ -4,12 +4,9 @@ var router = require('express').Router();
 var User = require(path.join(__dirname, '../models/User.js'));
 
 router.get('/', function(req, res) {
-  console.log('GET to /api/users/');
-  User.find({}).select('-_id').exec().then(function(users) {
-    console.log('THEN');
+  User.find({}).select('username -_id').exec().then(function(users) {
     res.send(users);
   }).catch(function(err) {
-    console.log('CATCH');
     console.error(err);
   });
 });
