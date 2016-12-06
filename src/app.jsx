@@ -5,13 +5,8 @@ class App extends React.Component {
       clicks: 0,
       posX: 0,
       posY: 0,
-      lastGuess: null,
-      topScore: localStorage.topScore || 0
+      lastGuess: null
     };
-  }
-
-  componentWillMount() {
-    this.newGame();
   }
 
   newGame() {
@@ -26,7 +21,8 @@ class App extends React.Component {
       posY: newY,
       clicks: 0,
       username: username,
-      gameStart: Date.now()
+      gameStart: Date.now(),
+      playing: true
     });
   }
 
@@ -52,6 +48,9 @@ class App extends React.Component {
   }
 
   guess(e) {
+    if(!this.state.playing) {
+      this.newGame();
+    }
     e = e.nativeEvent;
     let stateUpdate = {};
     let proximity = this.distance(e.offsetX, e.offsetY);
@@ -64,22 +63,18 @@ class App extends React.Component {
       stateUpdate.lastGuess = `You win with ${this.state.clicks + 1} clicks! `;
       stateUpdate.lastGuess += `You took ${gameTime} seconds to win. `;
       stateUpdate.lastGuess += `Score: ${score} `;
-
-      if(score > this.state.topScore) {
-        if (this.state.clicks > 1) {
-          let username = this.state.username;
-          this.setState({topScore: score}, () => localStorage.topScore = score);
-          $.post('/api/scores', {
-            username: username,
-            score: score
-          }).done(function() {
-            console.log('Posted new top score');
-          }).fail(function(err) {
-            console.error(err);
-          });
-        } else {
-          alert('Perfect scores don\'t go on the leaderboard!');
-        }
+      this.setState({playing: false});
+      if (this.state.clicks > 1) {
+        let username = this.state.username;
+        this.setState({topScore: score}, () => localStorage.topScore = score);
+        $.post('/api/scores', {
+          username: username,
+          score: score
+        }).fail(function(err) {
+          console.error(err);
+        });
+      } else {
+        alert('Perfect scores don\'t go on the leaderboard!');
       }
       this.newGame();
     } else {
@@ -89,22 +84,12 @@ class App extends React.Component {
     this.setState(stateUpdate);
   }
 
-  resetScore() {
-    var sure = confirm('Would you like to reset the top score?');
-    if (sure) {
-      this.setState({topScore: 0}, () => localStorage.topScore = 0);
-    } else {
-      alert('Top score not reset');
-    }
-  }
-
   render() {
     return (
       <div>
         <TopBar />
         <h3>Clicks: {this.state.clicks}</h3>
         <h5>Last Guess: {this.state.lastGuess ? this.state.lastGuess : 'no last guess'}</h5>
-        <h5 onDoubleClick={this.resetScore.bind(this)}>Top Score: {this.state.topScore}</h5>
         <GameField width={this.props.width} height={this.props.height} clickHandler={this.guess.bind(this)} />
         <LeaderBoard />
       </div>
