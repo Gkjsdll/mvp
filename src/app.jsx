@@ -17,10 +17,15 @@ class App extends React.Component {
   newGame() {
     let newX = Math.floor(Math.random() * this.props.width);
     let newY = Math.floor(Math.random() * this.props.height);
+    let username = this.state.username || '';
+    while(!username) {
+      username = prompt('Choose a username:');
+    }
     this.setState({
       posX: newX,
       posY: newY,
       clicks: 0,
+      username: username,
       gameStart: Date.now()
     });
   }
@@ -61,9 +66,17 @@ class App extends React.Component {
       stateUpdate.lastGuess += `Score: ${score} `;
 
       if(score > this.state.topScore) {
-        if (score < 10000) {
-          localStorage.topScore = score;
-          this.setState({topScore: score});
+        if (this.state.clicks > 1) {
+          let username = this.state.username;
+          this.setState({topScore: score}, () => localStorage.topScore = score);
+          $.post('/api/scores', {
+            username: username,
+            score: score
+          }).done(function() {
+            console.log('Posted new top score');
+          }).fail(function(err) {
+            console.error(err);
+          });
         } else {
           alert('Perfect scores don\'t go on the leaderboard!');
         }
@@ -77,10 +90,9 @@ class App extends React.Component {
   }
 
   resetScore() {
-    var sure = prompt('Would you like to reset the top score?', '2', '3', '4');
+    var sure = confirm('Would you like to reset the top score?');
     if (sure) {
-      localStorage.topScore = 0;
-      this.setState({topScore: 0});
+      this.setState({topScore: 0}, () => localStorage.topScore = 0);
     } else {
       alert('Top score not reset');
     }
@@ -90,11 +102,10 @@ class App extends React.Component {
     return (
       <div>
         <TopBar />
-        <h1>Hot and Cold</h1>
         <h3>Clicks: {this.state.clicks}</h3>
         <h5>Last Guess: {this.state.lastGuess ? this.state.lastGuess : 'no last guess'}</h5>
+        <h5 onDoubleClick={this.resetScore.bind(this)}>Top Score: {this.state.topScore}</h5>
         <GameField width={this.props.width} height={this.props.height} clickHandler={this.guess.bind(this)} />
-        <h5 onDoubleClick={this.resetScore}>Top Score: {this.state.topScore}</h5>
       </div>
       );
   }

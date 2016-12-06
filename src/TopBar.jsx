@@ -5,9 +5,5 @@ var TopBar = (props) => (
         <li className="menu-text">Hot and Cold</li>
       </ul>
     </div>
-
-    <div className="top-bar-right">
-      {props.authorized ? <User /> : <Guest />}
-    </div>
   </div>
 );
