@@ -21,9 +21,10 @@ class LeaderBoard extends React.Component {
     return (
       <ul id="leaderBoard">
         <li><h5>High Scores</h5></li>
-        {this.state.scores.map(function(entry) {
+        {this.state.scores.map(function(entry, rank) {
           return (
             <li className="entry">
+              <span className="rank">{rank + 1}. </span>
               <span className="user">{entry.username}</span>
               <span className="score">{entry.score}</span>
             </li>
