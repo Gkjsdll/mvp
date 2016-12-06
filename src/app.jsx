@@ -6,7 +6,8 @@ class App extends React.Component {
       posX: 0,
       posY: 0,
       lastGuess: null,
-      scores: []
+      scores: [],
+      showLeaderboard: false
     };
     this.getScores();
   }
@@ -111,14 +112,19 @@ class App extends React.Component {
     }
   }
 
+  toggleLeaderBoard() {
+    this.setState({showLeaderboard: !this.state.showLeaderboard});
+  }
+
   render() {
     return (
       <div>
-        <TopBar />
+        <TopBar clickHandler={this.toggleLeaderBoard.bind(this)}/>
         <h3>Clicks: {this.state.clicks}</h3>
         <h5>Last Guess: {this.state.lastGuess ? this.state.lastGuess : 'no last guess'}</h5>
-        <GameField width={this.props.width} height={this.props.height} clickHandler={this.guess.bind(this)} />
-        <LeaderBoard scores={this.state.scores} />
+        {this.state.showLeaderboard ?
+          <LeaderBoard scores={this.state.scores} /> :
+          <GameField width={this.props.width} height={this.props.height} clickHandler={this.guess.bind(this)} />}
       </div>
       );
   }
