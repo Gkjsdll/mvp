@@ -89,6 +89,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
+        <TopBar />
         <h1>Hot and Cold</h1>
         <h3>Clicks: {this.state.clicks}</h3>
         <h5>Last Guess: {this.state.lastGuess ? this.state.lastGuess : 'no last guess'}</h5>
