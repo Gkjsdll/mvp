@@ -19,6 +19,8 @@ UserSchema.statics.register = function(user) {
   return User.findOne({ username: user.username }).exec().then(function(foundUser) {
     if (foundUser) {
       throw new Error('Username already taken.');
+    } if (!user.username || !user.password) {
+      throw new Error('Missing username or password');
     } else {
       return new User(user).save();
     }
