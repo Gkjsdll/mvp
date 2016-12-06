@@ -5,25 +5,40 @@ class App extends React.Component {
       clicks: 0,
       posX: 0,
       posY: 0,
-      lastGuess: null
+      lastGuess: null,
+      scores: []
     };
+    this.getScores();
   }
 
-  newGame() {
+  newGame(cb = () => {}) {
+    this.getScores();
     let newX = Math.floor(Math.random() * this.props.width);
     let newY = Math.floor(Math.random() * this.props.height);
-    let username = this.state.username || '';
+
+    let username = this.state.username;
+    if(username) {
+      return this.setState({
+        posX: newX,
+        posY: newY,
+        clicks: 0,
+        username: username,
+        gameStart: Date.now(),
+        playing: true
+      }, cb);
+    }
     while(!username) {
       username = prompt('Choose a username:');
     }
-    this.setState({
-      posX: newX,
-      posY: newY,
-      clicks: 0,
-      username: username,
-      gameStart: Date.now(),
-      playing: true
-    });
+    this.setState({username: username});
+
+  }
+
+  getScores(cb) {
+    let app = this;
+    $.get('/api/scores').done(function(scores) {
+      app.setState({scores: scores}, cb);
+    }).fail(console.error.bind(console));
   }
 
   distance(x, y) {
@@ -32,8 +47,12 @@ class App extends React.Component {
     return Math.sqrt(width ** 2 + height ** 2);
   }
 
-  score(clicks, time) {
+  score() {
+    let time = Date.now() - this.state.gameStart;
+    time = Math.floor(time / 100) / 10;
+    let clicks = this.state.clicks;
     let score = 10000;
+
     for(let i = 0; i < clicks; i++) {
       score *= 0.99;
       score -= 50;
@@ -42,45 +61,54 @@ class App extends React.Component {
       score *= 0.999;
       score -= 5;
     }
-    score = Math.floor(score);
 
+    score = Math.floor(score);
     return score;
   }
 
   guess(e) {
-    if(!this.state.playing) {
-      this.newGame();
-    }
+    let app = this;
     e = e.nativeEvent;
-    let stateUpdate = {};
-    let proximity = this.distance(e.offsetX, e.offsetY);
-    proximity = Math.round(proximity);
-    if (proximity < 35) {
-      let gameTime = Date.now() - this.state.gameStart;
-      gameTime = Math.floor(gameTime / 100) / 10;
-      let score = this.score(this.state.clicks, gameTime);
+    
+    let checkClick = function() {
+      let stateUpdate = {};
+      let proximity = app.distance(e.offsetX, e.offsetY);
+      proximity = Math.round(proximity);
+      if (proximity <= 35) {
+        let score = app.score();
+        let gameTime = Date.now() - app.state.gameStart;
+        gameTime = Math.floor(gameTime / 100) / 10;
 
-      stateUpdate.lastGuess = `You win with ${this.state.clicks + 1} clicks! `;
-      stateUpdate.lastGuess += `You took ${gameTime} seconds to win. `;
-      stateUpdate.lastGuess += `Score: ${score} `;
-      this.setState({playing: false});
-      if (this.state.clicks > 1) {
-        let username = this.state.username;
-        this.setState({topScore: score}, () => localStorage.topScore = score);
-        $.post('/api/scores', {
-          username: username,
-          score: score
-        }).fail(function(err) {
-          console.error(err);
-        });
+        stateUpdate.lastGuess = `You win with ${app.state.clicks + 1} clicks! `;
+        stateUpdate.lastGuess += `You took ${gameTime} seconds to win. `;
+        stateUpdate.lastGuess += `Score: ${score} `;
+        stateUpdate.playing = false;
+        stateUpdate.clicks = 0;
+        app.setState(stateUpdate);
+        if (app.state.clicks) { //First click not incremented if game is won
+          let username = app.state.username;
+          app.setState({topScore: score}, () => localStorage.topScore = score);
+          $.post('/api/scores', {
+            username: username,
+            score: score
+          }).fail(function(err) {
+            console.error(err);
+          });
+        } else {
+          alert('Perfect scores don\'t go on the leaderboard!');
+        }
       } else {
-        alert('Perfect scores don\'t go on the leaderboard!');
+        stateUpdate.lastGuess = `${proximity} pixels off!`;
+        stateUpdate.clicks = app.state.clicks + 1;
+        app.setState(stateUpdate);
       }
-    } else {
-      stateUpdate.lastGuess = `${proximity} pixels off!`;
-      stateUpdate.clicks = this.state.clicks + 1;
     }
-    this.setState(stateUpdate);
+
+    if(!app.state.playing) {
+      app.newGame(checkClick);
+    } else {
+      checkClick();
+    }
   }
 
   render() {
@@ -90,7 +118,7 @@ class App extends React.Component {
         <h3>Clicks: {this.state.clicks}</h3>
         <h5>Last Guess: {this.state.lastGuess ? this.state.lastGuess : 'no last guess'}</h5>
         <GameField width={this.props.width} height={this.props.height} clickHandler={this.guess.bind(this)} />
-        <LeaderBoard />
+        <LeaderBoard scores={this.state.scores} />
       </div>
       );
   }

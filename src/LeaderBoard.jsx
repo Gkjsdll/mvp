@@ -1,36 +1,16 @@
-class LeaderBoard extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      scores: []
-    }
-  }
-
-  componentWillMount() {
-    let board = this;
-    this.fetch(function(scores) {
-      board.setState({scores: scores});
-    });
-  }
-
-  fetch(cb) {
-    $.get('/api/scores').done(cb).fail(console.error.bind(console));
-  }
-
-  render () {
-    return (
-      <ul id="leaderBoard">
-        <li><h5>High Scores</h5></li>
-        {this.state.scores.map(function(entry, rank) {
-          return (
-            <li className="entry">
-              <span className="rank">{rank + 1}. </span>
-              <span className="user">{entry.username}</span>
-              <span className="score">{entry.score}</span>
-            </li>
-            )
-        })}
-      </ul>
-    );
-  }
+var LeaderBoard = (props) => {
+  return (
+    <ul id="leaderBoard">
+      <li><h5>High Scores</h5></li>
+      {props.scores.map(function(entry, rank) {
+        return (
+          <li className="entry">
+            <span className="rank">{rank + 1}. </span>
+            <span className="user">{entry.username}</span>
+            <span className="score">{entry.score}</span>
+          </li>
+          )
+      })}
+    </ul>
+  );
 }
