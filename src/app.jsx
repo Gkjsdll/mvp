@@ -61,8 +61,12 @@ class App extends React.Component {
       stateUpdate.lastGuess += `Score: ${score} `;
 
       if(score > this.state.topScore) {
-        localStorage.topScore = score;
-        this.setState({topScore: score});
+        if (score < 10000) {
+          localStorage.topScore = score;
+          this.setState({topScore: score});
+        } else {
+          alert('Perfect scores don\'t go on the leaderboard!');
+        }
       }
       this.newGame();
     } else {
@@ -72,6 +76,16 @@ class App extends React.Component {
     this.setState(stateUpdate);
   }
 
+  resetScore() {
+    var sure = prompt('Would you like to reset the top score?', '2', '3', '4');
+    if (sure) {
+      localStorage.topScore = 0;
+      this.setState({topScore: 0});
+    } else {
+      alert('Top score not reset');
+    }
+  }
+
   render() {
     return (
       <div>
@@ -79,7 +93,7 @@ class App extends React.Component {
         <h3>Clicks: {this.state.clicks}</h3>
         <h5>Last Guess: {this.state.lastGuess ? this.state.lastGuess : 'no last guess'}</h5>
         <GameField width={this.props.width} height={this.props.height} clickHandler={this.guess.bind(this)} />
-        <h5>Top Score: {this.state.topScore}</h5>
+        <h5 onDoubleClick={this.resetScore}>Top Score: {this.state.topScore}</h5>
       </div>
       );
   }
