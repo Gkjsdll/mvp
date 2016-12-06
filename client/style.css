@@ -8,3 +8,16 @@ h1, h3, h5 {
   height: 480px;
   margin: 0px auto;
 }
+
+#leaderBoard {
+  list-style: none;
+  text-align: center;
+}
+
+#leaderBoard .user {
+  font-weight: bold;
+}
+
+#leaderBoard .user::after {
+  content: ' ';
+}

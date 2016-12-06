@@ -106,6 +106,7 @@ class App extends React.Component {
         <h5>Last Guess: {this.state.lastGuess ? this.state.lastGuess : 'no last guess'}</h5>
         <h5 onDoubleClick={this.resetScore.bind(this)}>Top Score: {this.state.topScore}</h5>
         <GameField width={this.props.width} height={this.props.height} clickHandler={this.guess.bind(this)} />
+        <LeaderBoard />
       </div>
       );
   }
