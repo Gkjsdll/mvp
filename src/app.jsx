@@ -5,7 +5,8 @@ class App extends React.Component {
       clicks: 0,
       posX: 0,
       posY: 0,
-      lastGuess: null
+      lastGuess: null,
+      topScore: localStorage.topScore || 0
     };
   }
 
@@ -30,6 +31,21 @@ class App extends React.Component {
     return Math.sqrt(width ** 2 + height ** 2);
   }
 
+  score(clicks, time) {
+    let score = 10000;
+    for(let i = 0; i < clicks; i++) {
+      score *= 0.99;
+      score -= 50;
+    }
+    for(let i = 0; i < time * 10; i++) {
+      score *= 0.999;
+      score -= 5;
+    }
+    score = Math.floor(score);
+
+    return score;
+  }
+
   guess(e) {
     e = e.nativeEvent;
     let stateUpdate = {};
@@ -38,8 +54,16 @@ class App extends React.Component {
     if (proximity < 35) {
       let gameTime = Date.now() - this.state.gameStart;
       gameTime = Math.floor(gameTime / 100) / 10;
+      let score = this.score(this.state.clicks, gameTime);
+
       stateUpdate.lastGuess = `You win with ${this.state.clicks + 1} clicks! `;
-      stateUpdate.lastGuess += `You took ${gameTime} seconds to win.`;
+      stateUpdate.lastGuess += `You took ${gameTime} seconds to win. `;
+      stateUpdate.lastGuess += `Score: ${score} `;
+
+      if(score > this.state.topScore) {
+        localStorage.topScore = score;
+        this.setState({topScore: score});
+      }
       this.newGame();
     } else {
       stateUpdate.lastGuess = `${proximity} pixels off!`;
@@ -55,6 +79,7 @@ class App extends React.Component {
         <h3>Clicks: {this.state.clicks}</h3>
         <h5>Last Guess: {this.state.lastGuess ? this.state.lastGuess : 'no last guess'}</h5>
         <GameField width={this.props.width} height={this.props.height} clickHandler={this.guess.bind(this)} />
+        <h5>Top Score: {this.state.topScore}</h5>
       </div>
       );
   }
