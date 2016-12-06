@@ -2,7 +2,7 @@
   "name": "hrsf50-mvp",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -19,6 +19,15 @@
   "homepage": "https://github.com/Gkjsdll/hrsf50-mvp#readme",
   "dependencies": {
     "babel-cli": "^6.18.0",
-    "babel-preset-react": "^6.16.0"
+    "babel-preset-react": "^6.16.0",
+    "bcrypt": "^1.0.0",
+    "bluebird": "^3.4.6",
+    "body-parser": "^1.15.2",
+    "cookie-parser": "^1.4.3",
+    "dotenv": "^2.0.0",
+    "express": "^4.14.0",
+    "jwt-simple": "^0.5.1",
+    "mongoose": "^4.7.1",
+    "morgan": "^1.7.0"
   }
 }
