@@ -7,7 +7,11 @@ var TopBar = (props) => (
     </div>
     <div className="top-bar-right">
       <ul className="menu">
-        <li className="menu-text"><a href="#" onClick={props.clickHandler}>Toggle Leader Board</a></li>
+        <li className="menu-text">
+          <a href="#" onClick={props.clickHandler}>
+            {props.playing  ? 'Show Leader Board' : 'Show Game'}
+          </a>
+          </li>
       </ul>
     </div>
   </div>
