@@ -10,11 +10,41 @@
 
   <script src="/lib/react/react.min.js"></script>
   <script src="/lib/react/react-dom.min.js"></script>
+
 </head>
 <body>
   <div id="app"></div>
 
+  <div id="neverPlayed" class="reveal" data-reveal>
+    <h2>Getting Started</h2>
+    <p class="lead">How to play</p>
+    <ol>
+      <li>Click in the box to set your username</li>
+      <li>Click in the box to see how close you are to the target</li>
+      <li>Use how close your previous guesses were to locate the target</li>
+      <li>Repeat step 3 until you win!</li>
+    </ol>
+    <p class="lead">Scoring</p>
+    <ul>
+      <li>Your score starts at 10 000</li>
+      <li>You lose points every time you click</li>
+      <li>You lose points the longer you take to win</li>
+      <li>Scores are automatically submitted to the leaderboard</li>
+    </ul>
+
+    <a class="close-button" data-close>&#215;</a>
+  </div>
+
   <script src="/lib/jquery/dist/jquery.min.js"></script>
+  <script src="/lib/foundation-sites/dist/foundation.js"></script>
+  <script>
+    $(document).foundation();
+    if(!localStorage.playedBefore) {
+      localStorage.playedBefore = true;
+      new Foundation.Reveal($('#neverPlayed')).open();
+    }
+  </script>
+
   <script src="/compiled/app.js"></script>
 </body>
 </html>

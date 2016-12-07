@@ -8,6 +8,9 @@ var TopBar = (props) => (
     <div className="top-bar-right">
       <ul className="menu">
         <li className="menu-text">
+          <a href="#" data-open="neverPlayed">Getting Started</a>
+        </li>
+        <li className="menu-text">
           <a href="#" onClick={props.clickHandler}>
             {props.playing  ? 'Show Leader Board' : 'Show Game'}
           </a>
