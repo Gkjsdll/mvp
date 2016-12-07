@@ -4,6 +4,10 @@ var GameField = (props) => {
     height: props.height
   }
   return (
-    <div id="gameField" style={fieldStyle} onClick={props.clickHandler}></div>
+    <div>
+      <h3>Clicks: {props.clicks}</h3>
+      <h5>Last Guess: {props.lastGuess ? this.state.lastGuess : 'no last guess'}</h5>
+      <div id="gameField" style={fieldStyle} onClick={props.clickHandler}></div>
+    </div>
   );
 };

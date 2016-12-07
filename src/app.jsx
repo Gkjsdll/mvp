@@ -122,13 +122,13 @@ class App extends React.Component {
         <TopBar clickHandler={this.toggleLeaderBoard.bind(this)} playing={!this.state.showLeaderboard} />
         {this.state.showLeaderboard ?
           <LeaderBoard scores={this.state.scores} /> :
-          (
-          <div>
-            <h3>Clicks: {this.state.clicks}</h3>
-            <h5>Last Guess: {this.state.lastGuess ? this.state.lastGuess : 'no last guess'}</h5>
-            <GameField width={this.props.width} height={this.props.height} clickHandler={this.guess.bind(this)} />
-          </div>
-          )}
+          <GameField
+            width={this.props.width}
+            height={this.props.height}
+            clickHandler={this.guess.bind(this)}
+            clicks={this.state.clicks}
+            lastGuess={this.state.lastGuess}
+          />}
       </div>
       );
   }
