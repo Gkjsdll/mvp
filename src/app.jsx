@@ -35,7 +35,7 @@ class App extends React.Component {
 
   }
 
-  getScores(cb) {
+  getScores(cb = () => {}) {
     let app = this;
     $.get('/api/scores').done(function(scores) {
       app.setState({scores: scores}, cb);
@@ -113,7 +113,11 @@ class App extends React.Component {
   }
 
   toggleLeaderBoard() {
-    this.setState({showLeaderboard: !this.state.showLeaderboard});
+    let show = !this.state.showLeaderboard;
+    if (show) {
+      this.getScores();
+    }
+    this.setState({showLeaderboard: show});
   }
 
   render() {

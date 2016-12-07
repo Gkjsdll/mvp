@@ -6,7 +6,7 @@ var GameField = (props) => {
   return (
     <div>
       <h3>Clicks: {props.clicks}</h3>
-      <h5>Last Guess: {props.lastGuess ? this.state.lastGuess : 'no last guess'}</h5>
+      <h5>Last Guess: {props.lastGuess ? props.lastGuess : 'no last guess'}</h5>
       <div id="gameField" style={fieldStyle} onClick={props.clickHandler}></div>
     </div>
   );
