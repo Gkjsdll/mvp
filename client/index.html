@@ -39,10 +39,6 @@
   <script src="/lib/foundation-sites/dist/foundation.js"></script>
   <script>
     $(document).foundation();
-    // If the user has never played or has not played in the last three days
-    if(!localStorage.lastPlayed || Date.now() - localStorage.lastPlayed >= 259200000) {
-      new Foundation.Reveal($('#neverPlayed')).open();
-    }
     localStorage.lastPlayed = Date.now();
   </script>
 
