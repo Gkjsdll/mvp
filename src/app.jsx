@@ -45,7 +45,7 @@ class App extends React.Component {
   distance(x, y) {
     let width = Math.abs(this.state.posX - x);
     let height = Math.abs(this.state.posY - y);
-    return Math.sqrt(width ** 2 + height ** 2);
+    return Math.sqrt(width * width + height * height);
   }
 
   score() {
