@@ -88,7 +88,6 @@ class App extends React.Component {
         app.setState(stateUpdate);
         if (app.state.clicks) { //First click not incremented if game is won
           let username = app.state.username;
-          app.setState({topScore: score}, () => localStorage.topScore = score);
           $.post('/api/scores', {
             username: username,
             score: score
