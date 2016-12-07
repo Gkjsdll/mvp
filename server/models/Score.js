@@ -10,6 +10,16 @@ var ScoreSchema = new mongoose.Schema({
   score: {
     type: Number,
     required: true
+  },
+
+  clicks: {
+    type: Number,
+    required: true
+  },
+
+  time: {
+    type: Number,
+    required: true
   }
 });
 

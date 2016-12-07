@@ -7,7 +7,7 @@ class App extends React.Component {
       posY: 0,
       lastGuess: null,
       scores: [],
-      showLeaderboard: true
+      showLeaderboard: false
     };
     this.getScores();
   }
@@ -86,11 +86,13 @@ class App extends React.Component {
         stateUpdate.playing = false;
         stateUpdate.clicks = 0;
         app.setState(stateUpdate);
+
         if (app.state.clicks) { //First click not incremented if game is won
-          let username = app.state.username;
           $.post('/api/scores', {
-            username: username,
-            score: score
+            username: app.state.username,
+            score: score,
+            clicks: app.state.clicks,
+            time: gameTime * 10
           }).fail(function(err) {
             console.error(err);
           });

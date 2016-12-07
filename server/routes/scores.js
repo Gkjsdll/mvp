@@ -11,15 +11,11 @@ router.get('/', function(req, res) {
 });
 
 router.post('/', function(req, res) {
-  let username = req.body.username;
-  let score = req.body.score;
-  if(!username || !score) {
+  if(!req.body.username || !req.body.score) {
     return res.status(400).send('Missing username or score');
   }
-  var newScore = new Score({
-    username: username,
-    score: score
-  });
+  var newScore = new Score(req.body);
+  console.log(req.body);
   newScore.save().then(function(savedScore) {
     res.status(201).send(`Saved score ${savedScore.score} as ${savedScore.userame}`);
   }).catch(function(err) {
